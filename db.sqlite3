@@ -1,1 +1,42 @@
+-- Create the user profile table
+CREATE TABLE auth_user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    password VARCHAR(128) NOT NULL,
+    last_login DATETIME NULL,
+    is_superuser BOOLEAN NOT NULL,
+    username VARCHAR(150) NOT NULL UNIQUE,
+    first_name VARCHAR(150) NOT NULL,
+    last_name VARCHAR(150) NOT NULL,
+    email VARCHAR(254) NOT NULL UNIQUE,
+    is_staff BOOLEAN NOT NULL,
+    is_active BOOLEAN NOT NULL,
+    date_joined DATETIME NOT NULL
+);
+
+-- Create the Task table
+CREATE TABLE tasks_task (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    points INTEGER NOT NULL DEFAULT 0
+);
+
+-- Create the UserProfile table
+CREATE TABLE tasks_userprofile (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL UNIQUE,
+    points INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY(user_id) REFERENCES auth_user(id)
+);
+
+-- Create the TaskCompletion table
+CREATE TABLE tasks_taskcompletion (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    task_id INTEGER NOT NULL,
+    completed_at DATETIME NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES auth_user(id),
+    FOREIGN KEY(task_id) REFERENCES tasks_task(id),
+    UNIQUE(user_id, task_id)
+);
 
