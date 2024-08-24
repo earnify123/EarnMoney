@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Task Completed</h2>
+<p>Congratulations, you have completed the task and earned points!</p>
+<a href="{% url 'task_list' %}">Back to Task List</a>
+{% endblock %}
